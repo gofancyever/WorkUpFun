@@ -10,8 +10,8 @@ import Cocoa
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
-
-
+    
+    
     let statusItem = NSStatusBar.system().statusItem(withLength: -2)
     
     let popover = NSPopover()
@@ -30,8 +30,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     /// 启动
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-
-       initSubViews()
+        
+        initSubViews()
         
         
         let workTime1 = "08:\(minute):\(second)"
@@ -43,22 +43,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         startTimeStr(startTimeStr: workTime3)
         
         
-        
     }
-
+    
     /// 退出
     func applicationWillTerminate(_ aNotification: Notification) {
-        Tool.shareTool.group.notify(queue: DispatchQueue.main) {
-            print("complete!")
-        }
-
-        Tool.shareTool.seeWork { [weak self](result) in
-            if result != WorkResult.WorkResultNone {
-                self?.showAlert()
-            }
-        }
+//        if result != WorkResult.WorkResultNone {
+//            self.showAlert()
+//        }
     }
-
+    
     func initSubViews() {
         if let button = statusItem.button{
             button.image = NSImage(named: "remove-24")
@@ -124,6 +117,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
         
     }
-
+    
 }
 

@@ -7,17 +7,41 @@
 //
 
 import Cocoa
-
+import Alamofire
 class ViewController: NSViewController {
-
+    
     @IBOutlet weak var tf_workResult: NSTextField!
     
     @IBOutlet weak var tf_workContent: NSTextField!
     
     @IBOutlet weak var submitClick: NSButton!
     
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+
+        
+            // 下载图书
+        let queue = DispatchQueue.main
+        let group = DispatchGroup()
+        
+            Tool.shareTool.test { (result) in
+                print("hehe")
+                
+            }
+        queue.async(group: group, flags: .barrier) {
+            queue.sync(execute: { 
+                print("xixi")
+            })
+            
+            
+        }
+        print("fuck")
+        
+        
+        
         
     }
     
@@ -39,9 +63,9 @@ class ViewController: NSViewController {
     func submitWorkContent(content:String,result:String) {
         
     }
-
     
-   }
+    
+}
 
 
 

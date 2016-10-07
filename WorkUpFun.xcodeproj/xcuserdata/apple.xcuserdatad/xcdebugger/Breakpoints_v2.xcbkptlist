@@ -9,46 +9,14 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "WorkUpFun/Tool.swift"
-            timestampString = "497539864.087972"
+            filePath = "WorkUpFun/AppDelegate.swift"
+            timestampString = "497545879.867405"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "55"
-            endingLineNumber = "55"
-            landmarkName = "seeWork(result:)"
+            startingLineNumber = "50"
+            endingLineNumber = "50"
+            landmarkName = "applicationWillTerminate(_:)"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "WorkUpFun.Tool.(seeWork (result : (WorkUpFun.WorkResult) -&gt; ()) -&gt; ()).(closure #1)"
-                  moduleName = "WorkUpFun"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/apple/Documents/Demo/WorkUpFun/WorkUpFun/Tool.swift"
-                  timestampString = "497539867.466855"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "55"
-                  endingLineNumber = "55"
-                  offsetFromSymbolStart = "58">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "WorkUpFun.Tool.(seeWork (result : (WorkUpFun.WorkResult) -&gt; ()) -&gt; ()).(closure #1).(closure #1)"
-                  moduleName = "WorkUpFun"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/apple/Documents/Demo/WorkUpFun/WorkUpFun/Tool.swift"
-                  timestampString = "497539867.470972"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "56"
-                  endingLineNumber = "56"
-                  offsetFromSymbolStart = "111">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -57,14 +25,14 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "WorkUpFun/Tool.swift"
-            timestampString = "497539912.04644"
+            filePath = "Alamofire/Source/Alamofire.swift"
+            timestampString = "497550967.589111"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "52"
-            endingLineNumber = "52"
-            landmarkName = "seeWork(result:)"
-            landmarkType = "7">
+            startingLineNumber = "134"
+            endingLineNumber = "134"
+            landmarkName = "request(_:method:parameters:encoding:headers:)"
+            landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
