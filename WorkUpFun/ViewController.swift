@@ -10,18 +10,38 @@ import Cocoa
 
 class ViewController: NSViewController {
 
+    @IBOutlet weak var tf_workResult: NSTextField!
+    
+    @IBOutlet weak var tf_workContent: NSTextField!
+    
+    @IBOutlet weak var submitClick: NSButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
     }
-
+    
+    @IBAction func btn_submitClick(_ sender: AnyObject) {
+        
+        let content = tf_workContent.stringValue
+        let result = tf_workResult.stringValue
+        submitWorkContent(content: content,result: result)
+    }
+    
+    
     override var representedObject: Any? {
         didSet {
-        // Update the view, if already loaded.
+            
         }
     }
+    
+    /// 提交工作总结
+    func submitWorkContent(content:String,result:String) {
+        
+    }
+
+    
+   }
 
 
-}
 

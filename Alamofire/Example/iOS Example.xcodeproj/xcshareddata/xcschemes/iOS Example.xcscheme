@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "18E0E5601DA640B500F53877"
-               BuildableName = "WorkUpFun.app"
-               BlueprintName = "WorkUpFun"
-               ReferencedContainer = "container:WorkUpFun.xcodeproj">
+               BlueprintIdentifier = "F8111E0419A951050040E7D1"
+               BuildableName = "iOS Example.app"
+               BlueprintName = "iOS Example"
+               ReferencedContainer = "container:iOS Example.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -28,34 +28,14 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "18E0E5711DA640B600F53877"
-               BuildableName = "WorkUpFunTests.xctest"
-               BlueprintName = "WorkUpFunTests"
-               ReferencedContainer = "container:WorkUpFun.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "18E0E57C1DA640B600F53877"
-               BuildableName = "WorkUpFunUITests.xctest"
-               BlueprintName = "WorkUpFunUITests"
-               ReferencedContainer = "container:WorkUpFun.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "18E0E5601DA640B500F53877"
-            BuildableName = "WorkUpFun.app"
-            BlueprintName = "WorkUpFun"
-            ReferencedContainer = "container:WorkUpFun.xcodeproj">
+            BlueprintIdentifier = "F8111E0419A951050040E7D1"
+            BuildableName = "iOS Example.app"
+            BlueprintName = "iOS Example"
+            ReferencedContainer = "container:iOS Example.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -75,12 +55,19 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "18E0E5601DA640B500F53877"
-            BuildableName = "WorkUpFun.app"
-            BlueprintName = "WorkUpFun"
-            ReferencedContainer = "container:WorkUpFun.xcodeproj">
+            BlueprintIdentifier = "F8111E0419A951050040E7D1"
+            BuildableName = "iOS Example.app"
+            BlueprintName = "iOS Example"
+            ReferencedContainer = "container:iOS Example.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <EnvironmentVariables>
+         <EnvironmentVariable
+            key = "OS_ACTIVITY_MODE"
+            value = "disable"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+      </EnvironmentVariables>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -94,10 +81,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "18E0E5601DA640B500F53877"
-            BuildableName = "WorkUpFun.app"
-            BlueprintName = "WorkUpFun"
-            ReferencedContainer = "container:WorkUpFun.xcodeproj">
+            BlueprintIdentifier = "F8111E0419A951050040E7D1"
+            BuildableName = "iOS Example.app"
+            BlueprintName = "iOS Example"
+            ReferencedContainer = "container:iOS Example.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

@@ -14,10 +14,24 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "18E0E5601DA640B500F53877"
-               BuildableName = "WorkUpFun.app"
-               BlueprintName = "WorkUpFun"
-               ReferencedContainer = "container:WorkUpFun.xcodeproj">
+               BlueprintIdentifier = "F8111E3219A95C8B0040E7D1"
+               BuildableName = "Alamofire.framework"
+               BlueprintName = "Alamofire iOS"
+               ReferencedContainer = "container:Alamofire.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "NO"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "F8111E3D19A95C8B0040E7D1"
+               BuildableName = "Alamofire iOS Tests.xctest"
+               BlueprintName = "Alamofire iOS Tests"
+               ReferencedContainer = "container:Alamofire.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -32,30 +46,20 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "18E0E5711DA640B600F53877"
-               BuildableName = "WorkUpFunTests.xctest"
-               BlueprintName = "WorkUpFunTests"
-               ReferencedContainer = "container:WorkUpFun.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "18E0E57C1DA640B600F53877"
-               BuildableName = "WorkUpFunUITests.xctest"
-               BlueprintName = "WorkUpFunUITests"
-               ReferencedContainer = "container:WorkUpFun.xcodeproj">
+               BlueprintIdentifier = "F8111E3D19A95C8B0040E7D1"
+               BuildableName = "Alamofire iOS Tests.xctest"
+               BlueprintName = "Alamofire iOS Tests"
+               ReferencedContainer = "container:Alamofire.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "18E0E5601DA640B500F53877"
-            BuildableName = "WorkUpFun.app"
-            BlueprintName = "WorkUpFun"
-            ReferencedContainer = "container:WorkUpFun.xcodeproj">
+            BlueprintIdentifier = "F8111E3219A95C8B0040E7D1"
+            BuildableName = "Alamofire.framework"
+            BlueprintName = "Alamofire iOS"
+            ReferencedContainer = "container:Alamofire.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -71,16 +75,22 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "18E0E5601DA640B500F53877"
-            BuildableName = "WorkUpFun.app"
-            BlueprintName = "WorkUpFun"
-            ReferencedContainer = "container:WorkUpFun.xcodeproj">
+            BlueprintIdentifier = "F8111E3219A95C8B0040E7D1"
+            BuildableName = "Alamofire.framework"
+            BlueprintName = "Alamofire iOS"
+            ReferencedContainer = "container:Alamofire.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
+      <EnvironmentVariables>
+         <EnvironmentVariable
+            key = "OS_ACTIVITY_MODE"
+            value = "disable"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+      </EnvironmentVariables>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -90,16 +100,15 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "18E0E5601DA640B500F53877"
-            BuildableName = "WorkUpFun.app"
-            BlueprintName = "WorkUpFun"
-            ReferencedContainer = "container:WorkUpFun.xcodeproj">
+            BlueprintIdentifier = "F8111E3219A95C8B0040E7D1"
+            BuildableName = "Alamofire.framework"
+            BlueprintName = "Alamofire iOS"
+            ReferencedContainer = "container:Alamofire.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">
