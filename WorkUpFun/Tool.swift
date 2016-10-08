@@ -38,16 +38,19 @@ class Tool: NSObject {
         
     }
     
-    func getCookie() {
+    func loadCookie() {
         
-        let parameter = ["username":"",
-                         "password":""]
-        let response = Alamofire.request(cookieUrl, method: .post, parameters: parameter)
+//        let parameter = ["username":"",
+//                         "password":""]
+        Alamofire.request("https://www.baidu.com/", method: .get).response { (resp) in
+            let cookies = HTTPCookie.cookies(withResponseHeaderFields: resp.response?.allHeaderFields as! [String: String], for: (resp.response?.url!)!)
+            print(cookies)
+        }
         
-        let cookies = HTTPCookie.cookies(withResponseHeaderFields: response.response?.allHeaderFields as! [String: String], for: (response.response?.url!)!)
+
         
         
-        Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies(cookies, for: URL(fileURLWithPath: workUrl), mainDocumentURL: nil)
+//        Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies(cookies, for: URL(fileURLWithPath: workUrl), mainDocumentURL: nil)
         
     }
     

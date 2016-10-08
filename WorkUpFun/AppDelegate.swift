@@ -32,15 +32,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         
         initSubViews()
-        
-        
-        let workTime1 = "08:\(minute):\(second)"
-        let workTime2 = "13:\(minute):\(second)"
-        let workTime3 = "18:\(minute):\(second)"
-        print("\(workTime1)===\(workTime2),\(workTime3)")
-        startTimeStr(startTimeStr: workTime1)
-        startTimeStr(startTimeStr: workTime2)
-        startTimeStr(startTimeStr: workTime3)
+            Tool.shareTool.loadCookie()
+//        
+//        let workTime1 = "08:\(minute):\(second)"
+//        let workTime2 = "13:\(minute):\(second)"
+//        let workTime3 = "18:\(minute):\(second)"
+//        print("\(workTime1)===\(workTime2),\(workTime3)")
+//        startTimeStr(startTimeStr: workTime1)
+//        startTimeStr(startTimeStr: workTime2)
+//        startTimeStr(startTimeStr: workTime3)
         
         
     }
