@@ -9,17 +9,31 @@
 import Cocoa
 import Alamofire
 
-let workUrl = "http://example.com"
-let pattern = "<div class=\"uk-grid\">[\\s\\S]*?</div>"
-let cookieUrl = ""
+let workUrl = "http://192.168.0.111:9696/main.asp"
+let pattern = "<span id=\"daka_.*\">[\\s\\S]*?</span>"
+let cookieUrl = "http://192.168.0.111:9696/?action=login"
+let username = "gaof"
+let password = "nongji36002nd"
 
 
-enum WorkResult {
-    case WorkResultNone
+
+enum WorkResult:NSInteger {
+    case WorkResultNone = 0
     case WorkResultNeedPunchCard
     case WorkResultNeedWrite
     
 }
+
+enum WorkupTime:String {
+    case WorkupTimeNone = ""
+    case WorkupTimeAM = "http://192.168.0.111:9696/daka/qd_sb.asp?st=sb1"
+    case WorkupTimeNoon = "http://192.168.0.111:9696/daka/qd_sb.asp?st=sb2"
+    case WorkupTimeNight = "http://192.168.0.111:9696/daka/qd_sb.asp?st=xb"
+    case WorkupTimeWrite = "wrire"
+    
+}
+
+
 typealias ResultBlock = (_ result:WorkResult) -> Void
 
 private let sharedInstance = Tool()
@@ -29,59 +43,105 @@ class Tool: NSObject {
         return sharedInstance
     }
     
-    func test(block:@escaping ResultBlock){
-        let queue = DispatchQueue.main
-        queue.async {
-            sleep(1)
-            block(WorkResult.WorkResultNeedPunchCard)
-        }
+    
+    
+    func toolReviewWork(workType: WorkupTime) {
         
+        let parameter = ["username":username,
+                         "password":password]
+        Alamofire.request(cookieUrl, method: .post, parameters: parameter)
+            .response { (resp) in
+                self.seeWork(workType: workType, handle: { (result) in
+                    print(result)
+                })
+        }
     }
     
-    func loadCookie() {
-        
-//        let parameter = ["username":"",
-//                         "password":""]
-        Alamofire.request("https://www.baidu.com/", method: .get).response { (resp) in
-            let cookies = HTTPCookie.cookies(withResponseHeaderFields: resp.response?.allHeaderFields as! [String: String], for: (resp.response?.url!)!)
-            print(cookies)
+    func toolWorkupRequest(timeType:WorkupTime) {
+        let parameter = ["username":username,
+                         "password":password]
+        Alamofire.request(cookieUrl, method: .post, parameters: parameter)
+            .response { (resp) in
+                self.workupWithTime(timeType: timeType)
         }
-        
-
-        
-        
-//        Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies(cookies, for: URL(fileURLWithPath: workUrl), mainDocumentURL: nil)
-        
     }
     
-    let queue = DispatchQueue(label: "seeWork")
-    let group = DispatchGroup()
+    func workupWithTime(timeType:WorkupTime) {
+        let url = timeType.rawValue;
+        print(url)
+        Alamofire.request(url).response { (response) in
+            print("打开成功")
+        }
+    }
     
-    func seeWork()->WorkResult? {
-        
+    
+    
+    func seeWork(workType:WorkupTime,handle:@escaping (_ result:Bool)->()) {
         //        getCookie()
         
-        var result:WorkResult?
-        
-            Alamofire.request("http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000").response { (response) in
-                if let data = response.data, let utf8Text = String(data: data, encoding: .utf8) {
-                    let regular = try! NSRegularExpression(pattern: pattern, options:.caseInsensitive)
-                    
-                    let results = regular.matches(in: utf8Text, options: .reportProgress , range: NSMakeRange(0, utf8Text.characters.count))
-                    
-                    //输出截取结果
-                    print("符合的结果有\(results.count)个")
-                    for result in results {
-                        print((utf8Text as NSString).substring(with: result.range))
+        Alamofire.request(workUrl).response { (response) in
+            let cfEnc = CFStringEncodings.GB_18030_2000
+            let enc = CFStringConvertEncodingToNSStringEncoding(CFStringEncoding(cfEnc.rawValue))
+            let content = String(data: response.data!, encoding: String.Encoding(rawValue: enc))
+            //            print(content!)
+            //正则匹配
+            let regular = try! NSRegularExpression(pattern: pattern, options:.caseInsensitive)
+            let results = regular.matches(in: content!, options: .reportProgress , range: NSMakeRange(0, content!.characters.count))
+            //输出截取结果
+            print("符合的结果有\(results.count)个")
+            for resultRange in results {
+                let resultStr = (content! as NSString).substring(with: resultRange.range)
+                
+                //1判断是否为写总结
+                if workType == WorkupTime.WorkupTimeWrite {
+                    if self.checkNeedWrite(content: resultStr) {
+                        handle(true)
                     }
-                    
-                    
+                }else{
+                    let result = self.checkWorkTime(content: resultStr, workType: workType)
+                    if !result { break }//如果不是指定时间跳过
+                    if self.checkNeedPunchCard(content: resultStr){
+                        handle(true)
+                    }
                 }
-                result = WorkResult.WorkResultNeedPunchCard
-                self.group.leave()
             }
+            
+        }
         
-        return result
+    }
+    
+    func checkNeedPunchCard(content:String) ->Bool {
+        let hrefPattern = "<a href=.*>.*</a>"
+        let pred = NSPredicate(format: "SELF MATCHES \(hrefPattern)", 0)
+        let isHaveHref = pred.evaluate(with: content)
+        return isHaveHref
+    }
+    func checkNeedWrite(content:String) ->Bool {
+        let writePattern = "未写总结"
+        let pred = NSPredicate(format: "SELF MATCHES \(writePattern)", 0)
+        let isNoneWirte = pred.evaluate(with: content)
+        return isNoneWirte
+    }
+    func checkWorkTime(content:String,workType:WorkupTime) ->Bool {
+        var patternTime:String
+        switch (workType) {
+        case .WorkupTimeAM:
+            patternTime = "daka_sb"
+            break;
+        case .WorkupTimeNoon:
+            patternTime = "daka_sb2"
+            break;
+        case .WorkupTimeNight:
+            patternTime = "daka_xb"
+            break;
+        default:
+            patternTime = "&&&&&"
+            break;
+        }
+        let pred = NSPredicate(format: "SELF MATCHES \(patternTime)", 0)
+        let isMatch = pred.evaluate(with: content)
+        return isMatch
+        
     }
     
 }

@@ -32,15 +32,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         
         initSubViews()
-            Tool.shareTool.loadCookie()
-//        
-//        let workTime1 = "08:\(minute):\(second)"
-//        let workTime2 = "13:\(minute):\(second)"
-//        let workTime3 = "18:\(minute):\(second)"
-//        print("\(workTime1)===\(workTime2),\(workTime3)")
-//        startTimeStr(startTimeStr: workTime1)
-//        startTimeStr(startTimeStr: workTime2)
-//        startTimeStr(startTimeStr: workTime3)
+        let workTime1 = "08:\(minute):\(second)"
+        let workTime2 = "13:\(minute):\(second)"
+        let workTime3 = "18:\(minute):\(second)"
+        print("\(workTime1)===\(workTime2),\(workTime3)")
+        startTimeStr(startTimeStr: workTime1, timeType: .WorkupTimeAM)
+        startTimeStr(startTimeStr: workTime2,timeType: .WorkupTimeNoon)
+        startTimeStr(startTimeStr: workTime3,timeType: .WorkupTimeNight)
         
         
     }
@@ -66,7 +64,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         popover.contentViewController = contentVC
     }
     
-    func startTimeStr(startTimeStr:String) {
+    func startTimeStr(startTimeStr:String,timeType:WorkupTime) {
         let formatter = DateFormatter()
         formatter.dateFormat = "HH:mm:ss"
         let workDate = formatter.date(from: startTimeStr)
@@ -78,7 +76,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         print(time)
         if time!<0 { return }
         DispatchQueue.global().asyncAfter(deadline: .now()+time!) {
-            print("呵呵呵")
+            Tool.shareTool.toolWorkupRequest(timeType: timeType)
         }
     }
     
