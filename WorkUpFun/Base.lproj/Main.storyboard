@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1004" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="15G31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11201"/>
@@ -658,120 +658,6 @@
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="75" y="0.0"/>
-        </scene>
-        <!--Window Controller-->
-        <scene sceneID="R2V-B0-nI4">
-            <objects>
-                <windowController id="B8D-0N-5wS" sceneMemberID="viewController">
-                    <window key="window" title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="IQv-IB-iLA">
-                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
-                        <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-                        <rect key="contentRect" x="196" y="240" width="480" height="270"/>
-                        <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
-                    </window>
-                    <connections>
-                        <segue destination="XfG-lQ-9wD" kind="relationship" relationship="window.shadowedContentViewController" id="cq2-FE-JQM"/>
-                    </connections>
-                </windowController>
-                <customObject id="Oky-zY-oP4" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="75" y="250"/>
-        </scene>
-        <!--View Controller-->
-        <scene sceneID="hIz-AP-VOD">
-            <objects>
-                <viewController id="XfG-lQ-9wD" customClass="ViewController" customModule="WorkUpFun" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" wantsLayer="YES" id="m2S-Jp-Qdl">
-                        <rect key="frame" x="0.0" y="0.0" width="480" height="204"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <subviews>
-                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="GPm-JQ-l5R">
-                                <rect key="frame" x="200" y="13" width="81" height="32"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="21" id="kCk-Oh-3eL"/>
-                                    <constraint firstAttribute="width" constant="69" id="l52-uj-ipC"/>
-                                </constraints>
-                                <buttonCell key="cell" type="push" title="提交" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="75T-Pd-6pK">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="btn_submitClick:" target="XfG-lQ-9wD" id="GqT-7N-ke4"/>
-                                </connections>
-                            </button>
-                            <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Jwf-Ru-grA">
-                                <rect key="frame" x="15" y="59" width="218" height="100"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="100" id="FYY-bG-lw8"/>
-                                </constraints>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="vdM-TG-hnq">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                            <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="exF-1A-NlQ">
-                                <rect key="frame" x="248" y="59" width="217" height="100"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="100" id="ROc-7u-ELw"/>
-                                </constraints>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="TTA-5i-9A2">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Fcd-sT-FGX">
-                                <rect key="frame" x="328" y="167" width="56" height="17"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="17" id="nK4-dC-5vi"/>
-                                    <constraint firstAttribute="width" constant="52" id="pPS-FF-HWC"/>
-                                </constraints>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="工作成果" id="mvY-aB-Cvx">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cOK-U0-g2H">
-                                <rect key="frame" x="96" y="167" width="56" height="17"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="52" id="Nj5-0x-C0A"/>
-                                    <constraint firstAttribute="height" constant="17" id="lKd-gR-vAQ"/>
-                                </constraints>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="工作内容" id="ha8-zr-sj4">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                        </subviews>
-                        <constraints>
-                            <constraint firstItem="cOK-U0-g2H" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="20" id="1I3-7p-1Pd"/>
-                            <constraint firstItem="Fcd-sT-FGX" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="20" id="1h0-F7-lYS"/>
-                            <constraint firstItem="GPm-JQ-l5R" firstAttribute="top" secondItem="Jwf-Ru-grA" secondAttribute="bottom" constant="18" id="BkC-37-Vap"/>
-                            <constraint firstItem="cOK-U0-g2H" firstAttribute="centerX" secondItem="Jwf-Ru-grA" secondAttribute="centerX" id="CMe-hV-NUb"/>
-                            <constraint firstAttribute="trailing" secondItem="exF-1A-NlQ" secondAttribute="trailing" constant="15" id="K1R-Mc-hHD"/>
-                            <constraint firstItem="Fcd-sT-FGX" firstAttribute="centerX" secondItem="exF-1A-NlQ" secondAttribute="centerX" id="KbF-cy-f5F"/>
-                            <constraint firstItem="Jwf-Ru-grA" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="15" id="OKC-Rx-A3s"/>
-                            <constraint firstItem="Jwf-Ru-grA" firstAttribute="top" secondItem="cOK-U0-g2H" secondAttribute="bottom" constant="8" id="PYR-AS-AUO"/>
-                            <constraint firstItem="GPm-JQ-l5R" firstAttribute="centerX" secondItem="m2S-Jp-Qdl" secondAttribute="centerX" id="aFb-Y1-OWx"/>
-                            <constraint firstItem="GPm-JQ-l5R" firstAttribute="top" secondItem="exF-1A-NlQ" secondAttribute="bottom" constant="18" id="kwN-oY-Byj"/>
-                            <constraint firstItem="exF-1A-NlQ" firstAttribute="width" secondItem="Jwf-Ru-grA" secondAttribute="width" id="s6l-eJ-9go"/>
-                            <constraint firstItem="exF-1A-NlQ" firstAttribute="leading" secondItem="Jwf-Ru-grA" secondAttribute="trailing" constant="15" id="xB0-Ro-gky"/>
-                            <constraint firstAttribute="bottom" secondItem="GPm-JQ-l5R" secondAttribute="bottom" constant="20" id="xBB-4L-oxH"/>
-                            <constraint firstItem="exF-1A-NlQ" firstAttribute="height" secondItem="Jwf-Ru-grA" secondAttribute="height" id="xbJ-he-sj0"/>
-                        </constraints>
-                    </view>
-                    <connections>
-                        <outlet property="submitClick" destination="GPm-JQ-l5R" id="nij-S0-baB"/>
-                        <outlet property="tf_workContent" destination="Jwf-Ru-grA" id="r7S-a8-EhB"/>
-                        <outlet property="tf_workResult" destination="exF-1A-NlQ" id="uQN-rC-Qae"/>
-                    </connections>
-                </viewController>
-                <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="75" y="655"/>
         </scene>
     </scenes>
 </document>

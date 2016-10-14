@@ -14,7 +14,7 @@ let pattern = "<span id=\"daka_.*\">[\\s\\S]*?</span>"
 let cookieUrl = "http://192.168.0.111:9696/?action=login"
 let username = "gaof"
 let password = "nongji36002nd"
-
+let workReportUrl = "http://192.168.0.111:9696/worklog/add_ok.asp"
 
 
 enum WorkResult:NSInteger {
@@ -42,35 +42,71 @@ class Tool: NSObject {
     class var shareTool : Tool{
         return sharedInstance
     }
-    
-    
-    
-    func toolReviewWork(workType: WorkupTime) {
-        
-        let parameter = ["username":username,
-                         "password":password]
-        Alamofire.request(cookieUrl, method: .post, parameters: parameter)
-            .response { (resp) in
-                self.seeWork(workType: workType, handle: { (result) in
-                    print(result)
-                })
+    ///带Cooie 发送总结
+    func toolSubmitWorkReport(model:OE_WorkReportModel){
+        toolHaveCookieRequest {
+            self.submitWorkReport(model: model)
         }
     }
-    
+    ///带Cooie 发送打卡
     func toolWorkupRequest(timeType:WorkupTime) {
+        toolHaveCookieRequest {
+            self.workupWithTime(timeType: timeType)
+        }
+        
+        
+    }
+    /// 检测打卡 true 为需要打卡 false 为不需要
+    func toolChecKWorkState(workType:WorkupTime,handle:@escaping (_ result:Bool)->()){
+        toolHaveCookieRequest {
+            self.seeWork(workType:workType) { (result) in
+                handle(result)
+            }
+        }
+
+    }
+    
+    
+   /// 发送工作总结
+   private func submitWorkReport(model:OE_WorkReportModel) {
+        var parameter:[String:String] = [String:String]()
+        
+        parameter["tjdate"]  = model.dateStr
+        parameter["dt"] = "tj"
+        parameter["jjzy0"] = model.jjzy
+        parameter["worktime0"] = model.workTime
+        parameter["title0"] = model.title
+        parameter["workcg0"] = model.workResult
+        Alamofire.request(workReportUrl, method: .post, parameters: parameter)
+            .response { (response) in
+                let cfEnc = CFStringEncodings.GB_18030_2000
+                let enc = CFStringConvertEncodingToNSStringEncoding(CFStringEncoding(cfEnc.rawValue))
+                let content = String(data: response.data!, encoding: String.Encoding(rawValue: enc))
+                print(content)
+        }
+        
+    }
+    
+    
+   /// 获取cookie 执行 方法
+   private func toolHaveCookieRequest(requestFunc:@escaping ()->()){
         let parameter = ["username":username,
                          "password":password]
         Alamofire.request(cookieUrl, method: .post, parameters: parameter)
             .response { (resp) in
-                self.workupWithTime(timeType: timeType)
+                print("获取到cookie...")
+                requestFunc()
         }
     }
     
-    func workupWithTime(timeType:WorkupTime) {
+    
+    
+    /// 发送打卡
+    private func workupWithTime(timeType:WorkupTime) {
         let url = timeType.rawValue;
         print(url)
         Alamofire.request(url).response { (response) in
-            print("打开成功")
+            print("执行打卡完毕")
         }
     }
     
@@ -99,9 +135,8 @@ class Tool: NSObject {
                     }
                 }else{
                     let result = self.checkWorkTime(content: resultStr, workType: workType)
-                    if !result { break }//如果不是指定时间跳过
-                    if self.checkNeedPunchCard(content: resultStr){
-                        handle(true)
+                    if result {
+                        handle(self.checkNeedPunchCard(content: resultStr))
                     }
                 }
             }
@@ -112,9 +147,7 @@ class Tool: NSObject {
     
     func checkNeedPunchCard(content:String) ->Bool {
         let hrefPattern = "<a href=.*>.*</a>"
-        let pred = NSPredicate(format: "SELF MATCHES \(hrefPattern)", 0)
-        let isHaveHref = pred.evaluate(with: content)
-        return isHaveHref
+        return content.isMatched(hrefPattern)
     }
     func checkNeedWrite(content:String) ->Bool {
         let writePattern = "未写总结"
@@ -138,10 +171,22 @@ class Tool: NSObject {
             patternTime = "&&&&&"
             break;
         }
-        let pred = NSPredicate(format: "SELF MATCHES \(patternTime)", 0)
-        let isMatch = pred.evaluate(with: content)
+
+        let isMatch = content.isMatched(patternTime)
         return isMatch
         
     }
     
+}
+private extension String {
+    func isMatched(_ pattern: String) -> Bool {
+        
+        let regular = try! NSRegularExpression(pattern: pattern, options:.caseInsensitive)
+        let results = regular.matches(in: self, options: .reportProgress , range: NSMakeRange(0, self.characters.count))
+        if results.count>0 {
+            return true
+        }else{
+            return false
+        }
+    }
 }

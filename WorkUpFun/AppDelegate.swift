@@ -32,13 +32,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         
         initSubViews()
-        let workTime1 = "08:\(minute):\(second)"
-        let workTime2 = "13:\(minute):\(second)"
-        let workTime3 = "18:\(minute):\(second)"
-        print("\(workTime1)===\(workTime2),\(workTime3)")
-        startTimeStr(startTimeStr: workTime1, timeType: .WorkupTimeAM)
-        startTimeStr(startTimeStr: workTime2,timeType: .WorkupTimeNoon)
-        startTimeStr(startTimeStr: workTime3,timeType: .WorkupTimeNight)
+        
+//        startWorkupFun()
         
         
     }
@@ -58,10 +53,21 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         let  contentVC = QuotesViewController(nibName: "QuotesViewController", bundle: nil)
         popover.contentSize = NSSize(width: 126, height: 280)
+        popover.behavior = .transient;
         contentVC?.btnDidClick(btnBlock: { (isShowWrire) in
             self.popover.contentSize = NSSize(width:(isShowWrire ? 480 : 126), height: 280)
         })
         popover.contentViewController = contentVC
+    }
+    
+    
+    func startWorkupFun() {
+        //        let workTime2 = "13:\(minute):\(second)"
+        //        let workTime3 = "18:\(minute):\(second)"
+        //        print("打卡时间：\(workTime2)====\(workTime3)")
+        //        Tool.shareTool.toolWorkupRequest(timeType: .WorkupTimeAM)//上班
+        //        startTimeStr(startTimeStr: workTime2,timeType: .WorkupTimeNoon)//午班
+        //        startTimeStr(startTimeStr: workTime3,timeType: .WorkupTimeNight)//下班
     }
     
     func startTimeStr(startTimeStr:String,timeType:WorkupTime) {
@@ -83,6 +89,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func showPopover(sender:AnyObject?){
         if let button = statusItem.button {
             popover.show(relativeTo: button.bounds, of: button, preferredEdge: NSRectEdge.minY)
+            
         }
     }
     func closePopover(sender: AnyObject?) {
@@ -90,6 +97,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     func togglePopover(sender: AnyObject?) {
+        NSRunningApplication.current().activate(options: NSApplicationActivationOptions.activateIgnoringOtherApps)
         if popover.isShown {
             closePopover(sender: sender)
         } else {

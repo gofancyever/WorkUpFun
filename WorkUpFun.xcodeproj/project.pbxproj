@@ -18,6 +18,7 @@
 		18E0E5AF1DA6840000F53877 /* QuotesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E0E5AD1DA6840000F53877 /* QuotesViewController.swift */; };
 		18E0E5B01DA6840000F53877 /* QuotesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18E0E5AE1DA6840000F53877 /* QuotesViewController.xib */; };
 		18E0E5B21DA7C5CE00F53877 /* Tool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E0E5B11DA7C5CE00F53877 /* Tool.swift */; };
+		BC6A76891DAD031700825F3D /* OE_WorkReportModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC6A76881DAD031700825F3D /* OE_WorkReportModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -124,6 +125,7 @@
 		18E0E5AD1DA6840000F53877 /* QuotesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuotesViewController.swift; sourceTree = "<group>"; };
 		18E0E5AE1DA6840000F53877 /* QuotesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QuotesViewController.xib; sourceTree = "<group>"; };
 		18E0E5B11DA7C5CE00F53877 /* Tool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tool.swift; sourceTree = "<group>"; };
+		BC6A76881DAD031700825F3D /* OE_WorkReportModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OE_WorkReportModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -184,6 +186,7 @@
 				18E0E5AD1DA6840000F53877 /* QuotesViewController.swift */,
 				18E0E5AE1DA6840000F53877 /* QuotesViewController.xib */,
 				18E0E5B11DA7C5CE00F53877 /* Tool.swift */,
+				BC6A76881DAD031700825F3D /* OE_WorkReportModel.swift */,
 			);
 			path = WorkUpFun;
 			sourceTree = "<group>";
@@ -416,6 +419,7 @@
 			files = (
 				18E0E5671DA640B500F53877 /* ViewController.swift in Sources */,
 				18E0E5AF1DA6840000F53877 /* QuotesViewController.swift in Sources */,
+				BC6A76891DAD031700825F3D /* OE_WorkReportModel.swift in Sources */,
 				18E0E5651DA640B500F53877 /* AppDelegate.swift in Sources */,
 				18E0E5B21DA7C5CE00F53877 /* Tool.swift in Sources */,
 			);
