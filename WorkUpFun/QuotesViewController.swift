@@ -8,13 +8,17 @@
 
 import Cocoa
 
+let KWorkState = "worKState"
 typealias BtnBlock = (_ isShowWrire:Bool) -> Void
 class QuotesViewController: NSViewController {
-
+    var clickLazyNum:Int = 0
     var block: BtnBlock?
+    var haveNeedWorkup:Bool = false;
     var showWrite: Bool = false
     @IBOutlet weak var tf_content: NSTextField!
     @IBOutlet weak var tf_result: NSTextField!
+    
+    @IBOutlet weak var btn_lazyWork: NSButton!
     
     @IBOutlet weak var pop_time: NSPopUpButton!
     @IBOutlet weak var pop_level: NSPopUpButton!
@@ -29,18 +33,30 @@ class QuotesViewController: NSViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         //        checkWorkState()
         
     }
     
-    @IBAction func btn_AM(_ sender: AnyObject) {
+    @IBAction func lab_lazyWork(_ sender: NSButton) {
+        if clickLazyNum>6 {
+            clickLazyNum = 0
+        }
+        clickLazyNum += 1
+        print(clickLazyNum)
+        if clickLazyNum == 6 {
+            sender.setAccessibilityTitle("^.^")
+        }else{
+            sender.stringValue = "=.="
+        }
+        
+    }
+    @IBAction func btn_AM(_ sender: NSButton) {
         Tool.shareTool.toolWorkupRequest(timeType: .WorkupTimeAM)
     }
-    @IBAction func btn_noon(_ sender: AnyObject) {
+    @IBAction func btn_noon(_ sender: NSButton) {
         Tool.shareTool.toolWorkupRequest(timeType: .WorkupTimeNoon)
     }
-    @IBAction func btn_night(_ sender: AnyObject){
+    @IBAction func btn_night(_ sender: NSButton){
         Tool.shareTool.toolWorkupRequest(timeType: .WorkupTimeNight)
     }
     
@@ -49,39 +65,6 @@ class QuotesViewController: NSViewController {
     }
     
     
-    
-    func checkWorkState(){
-        Tool.shareTool.toolChecKWorkState(workType: .WorkupTimeAM) { [weak self] (result) in
-            if (result){
-                self?.box_AM.fillColor = NSColor(calibratedRed: 232/255.0, green: 101/255.0, blue: 83/255.0, alpha: 1)
-            }else{
-                self?.box_AM.fillColor = NSColor(calibratedRed: 88/255.0, green: 232/255.0, blue: 109/255.0, alpha: 1)
-            }
-        }
-        Tool.shareTool.toolChecKWorkState(workType: .WorkupTimeNoon) { [weak self] (result) in
-            if (result){
-                self?.box_noon.fillColor = NSColor(calibratedRed: 232/255.0, green: 101/255.0, blue: 83/255.0, alpha: 1)
-            }else{
-                self?.box_noon.fillColor = NSColor(calibratedRed: 88/255.0, green: 232/255.0, blue: 109/255.0, alpha: 1)
-            }
-        }
-        Tool.shareTool.toolChecKWorkState(workType: .WorkupTimeNight) { [weak self] (result) in
-            if (result){
-                self?.box_night.fillColor = NSColor(calibratedRed: 232/255.0, green: 101/255.0, blue: 83/255.0, alpha: 1)
-            }else{
-                self?.box_night.fillColor = NSColor(calibratedRed: 88/255.0, green: 232/255.0, blue: 109/255.0, alpha: 1)
-            }
-        }
-        Tool.shareTool.toolChecKWorkState(workType: .WorkupTimeWrite) { [weak self] (result) in
-            if (result){
-                self?.box_write.fillColor = NSColor(calibratedRed: 232/255.0, green: 101/255.0, blue: 83/255.0, alpha: 1)
-            }else{
-                self?.box_write.fillColor = NSColor(calibratedRed: 88/255.0, green: 232/255.0, blue: 109/255.0, alpha: 1)
-            }
-        }
-
-    
-    }
     
     @IBAction func btn_writeClick(_ sender: NSButton) {
         self.showWrite = !self.showWrite
@@ -108,8 +91,73 @@ class QuotesViewController: NSViewController {
         model.dateStr = dateStr
         model.title = self.tf_content.stringValue
         model.workResult = self.tf_result.stringValue
-
+        
         Tool.shareTool.toolSubmitWorkReport(model: model)
+    }
+    
+
+
+    //MARK: 自定义方法
+    ///检测打卡状态
+    func checkWorkState(){
+
+
+        Tool.shareTool.toolChecKWorkState(workType: .WorkupTimeAM) { [weak self] (result) in
+            print("获取上班时间success")
+            if (result){
+                self?.box_AM.fillColor = NSColor(calibratedRed: 232/255.0, green: 101/255.0, blue: 83/255.0, alpha: 1)
+            }else{
+                self?.box_AM.fillColor = NSColor(calibratedRed: 88/255.0, green: 232/255.0, blue: 109/255.0, alpha: 1)
+            }
+
+        }
+        
+        
+        
+        Tool.shareTool.toolChecKWorkState(workType: .WorkupTimeNoon) { [weak self] (result) in
+            print("获取午班时间success")
+            if (result){
+                self?.box_noon.fillColor = NSColor(calibratedRed: 232/255.0, green: 101/255.0, blue: 83/255.0, alpha: 1)
+            }else{
+                self?.box_noon.fillColor = NSColor(calibratedRed: 88/255.0, green: 232/255.0, blue: 109/255.0, alpha: 1)
+            }
+            self?.haveNeedWorkup = result;
+            
+            
+        }
+        
+        
+        Tool.shareTool.toolChecKWorkState(workType: .WorkupTimeNight) { [weak self] (result) in
+            if (result){
+                print("获取晚班时间success")
+                self?.box_night.fillColor = NSColor(calibratedRed: 232/255.0, green: 101/255.0, blue: 83/255.0, alpha: 1)
+            }else{
+                self?.box_night.fillColor = NSColor(calibratedRed: 88/255.0, green: 232/255.0, blue: 109/255.0, alpha: 1)
+            }
+            self?.haveNeedWorkup = result;
+            
+            
+        }
+        
+        Tool.shareTool.toolChecKWorkState(workType: .WorkupTimeWrite) { [weak self] (result) in
+            if (result){
+                print("获取工作总结success")
+                self?.box_write.fillColor = NSColor(calibratedRed: 232/255.0, green: 101/255.0, blue: 83/255.0, alpha: 1)
+            }else{
+                self?.box_write.fillColor = NSColor(calibratedRed: 88/255.0, green: 232/255.0, blue: 109/255.0, alpha: 1)
+            }
+            self?.haveNeedWorkup = result;
+            
+        }
+   
+    }
+    
+    
+    ///保存打卡状态
+    func saveState(){
+        let defaults = UserDefaults.standard
+        defaults.set(haveNeedWorkup, forKey: KWorkState)
+        defaults.synchronize()
     }
     
 }

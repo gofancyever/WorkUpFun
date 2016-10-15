@@ -8,6 +8,8 @@
 
 import Cocoa
 import Alamofire
+import RxSwift
+import RxCocoa
 
 let workUrl = "http://192.168.0.111:9696/main.asp"
 let pattern = "<span id=\"daka_.*\">[\\s\\S]*?</span>"
@@ -63,10 +65,8 @@ class Tool: NSObject {
                 handle(result)
             }
         }
-
     }
-    
-    
+
    /// 发送工作总结
    private func submitWorkReport(model:OE_WorkReportModel) {
         var parameter:[String:String] = [String:String]()
@@ -113,7 +113,6 @@ class Tool: NSObject {
     
     
     func seeWork(workType:WorkupTime,handle:@escaping (_ result:Bool)->()) {
-        //        getCookie()
         
         Alamofire.request(workUrl).response { (response) in
             let cfEnc = CFStringEncodings.GB_18030_2000
@@ -140,20 +139,17 @@ class Tool: NSObject {
                     }
                 }
             }
-            
         }
-        
     }
-    
     func checkNeedPunchCard(content:String) ->Bool {
-        let hrefPattern = "<a href=.*>.*</a>"
-        return content.isMatched(hrefPattern)
+        let hrefPattern = "正常打卡"
+        let resultHref = content.isMatched(hrefPattern)
+        print("\(!resultHref)")
+        return !resultHref
     }
     func checkNeedWrite(content:String) ->Bool {
         let writePattern = "未写总结"
-        let pred = NSPredicate(format: "SELF MATCHES \(writePattern)", 0)
-        let isNoneWirte = pred.evaluate(with: content)
-        return isNoneWirte
+        return content.isMatched(writePattern)
     }
     func checkWorkTime(content:String,workType:WorkupTime) ->Bool {
         var patternTime:String
@@ -165,7 +161,7 @@ class Tool: NSObject {
             patternTime = "daka_sb2"
             break;
         case .WorkupTimeNight:
-            patternTime = "daka_xb"
+            patternTime = "st=xb"
             break;
         default:
             patternTime = "&&&&&"

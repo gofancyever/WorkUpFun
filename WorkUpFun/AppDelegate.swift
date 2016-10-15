@@ -40,9 +40,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     /// 退出
     func applicationWillTerminate(_ aNotification: Notification) {
-//        if result != WorkResult.WorkResultNone {
-//            self.showAlert()
-//        }
+            self.showAlert()
     }
     
     func initSubViews() {
@@ -62,12 +60,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     
     func startWorkupFun() {
-        //        let workTime2 = "13:\(minute):\(second)"
-        //        let workTime3 = "18:\(minute):\(second)"
-        //        print("打卡时间：\(workTime2)====\(workTime3)")
-        //        Tool.shareTool.toolWorkupRequest(timeType: .WorkupTimeAM)//上班
-        //        startTimeStr(startTimeStr: workTime2,timeType: .WorkupTimeNoon)//午班
-        //        startTimeStr(startTimeStr: workTime3,timeType: .WorkupTimeNight)//下班
+        let workTime2 = "13:\(minute):\(second)"
+        let workTime3 = "18:\(minute):\(second)"
+        print("打卡时间：\(workTime2)====\(workTime3)")
+        Tool.shareTool.toolWorkupRequest(timeType: .WorkupTimeAM)//上班
+        startTimeStr(startTimeStr: workTime2,timeType: .WorkupTimeNoon)//午班
+        startTimeStr(startTimeStr: workTime3,timeType: .WorkupTimeNight)//下班
     }
     
     func startTimeStr(startTimeStr:String,timeType:WorkupTime) {
