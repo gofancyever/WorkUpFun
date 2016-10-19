@@ -8,6 +8,8 @@
 
 import Cocoa
 
+let kAutoWorkupState = "autoWorkupState"
+
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
     
@@ -32,20 +34,29 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         
         initSubViews()
+        //接收自动打卡通知
+        NotificationCenter.default.addObserver(self, selector: #selector(AppDelegate.startAutoWorkup), name:notiWorkAuto , object: nil)
         
-//        startWorkupFun()
-        
+        //读取自动打卡通知
+        let result = UserDefaults.standard.object(forKey: kAutoWorkupState)
+        if (result != nil) {
+            startWorkupFun()
+        }
         
     }
     
     /// 退出
     func applicationWillTerminate(_ aNotification: Notification) {
+        let result = UserDefaults.standard.object(forKey: KWorkState) as! Bool
+        if result {
             self.showAlert()
+        }
+        
     }
     
     func initSubViews() {
         if let button = statusItem.button{
-            button.image = NSImage(named: "remove-24")
+            button.title = "☀︎"
             button.action = #selector(AppDelegate.togglePopover)
         }
         
@@ -58,6 +69,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         popover.contentViewController = contentVC
     }
     
+    //开启自动打卡通知
+    func startAutoWorkup() {
+        startWorkupFun()
+        //保存状态
+        UserDefaults.standard.set(true, forKey: kAutoWorkupState)
+        UserDefaults.standard.synchronize()
+    }
     
     func startWorkupFun() {
         let workTime2 = "13:\(minute):\(second)"
@@ -67,6 +85,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         startTimeStr(startTimeStr: workTime2,timeType: .WorkupTimeNoon)//午班
         startTimeStr(startTimeStr: workTime3,timeType: .WorkupTimeNight)//下班
     }
+    
+    
     
     func startTimeStr(startTimeStr:String,timeType:WorkupTime) {
         let formatter = DateFormatter()
@@ -122,5 +142,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
     }
     
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
 }
 

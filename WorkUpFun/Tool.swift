@@ -8,8 +8,7 @@
 
 import Cocoa
 import Alamofire
-import RxSwift
-import RxCocoa
+
 
 let workUrl = "http://192.168.0.111:9696/main.asp"
 let pattern = "<span id=\"daka_.*\">[\\s\\S]*?</span>"
@@ -50,14 +49,15 @@ class Tool: NSObject {
             self.submitWorkReport(model: model)
         }
     }
+    
     ///带Cooie 发送打卡
     func toolWorkupRequest(timeType:WorkupTime) {
         toolHaveCookieRequest {
             self.workupWithTime(timeType: timeType)
         }
-        
-        
     }
+    
+    
     /// 检测打卡 true 为需要打卡 false 为不需要
     func toolChecKWorkState(workType:WorkupTime,handle:@escaping (_ result:Bool)->()){
         toolHaveCookieRequest {
@@ -66,17 +66,21 @@ class Tool: NSObject {
             }
         }
     }
-
-   /// 发送工作总结
-   private func submitWorkReport(model:OE_WorkReportModel) {
-        var parameter:[String:String] = [String:String]()
-        
+    
+    /// 发送工作总结
+    private func submitWorkReport(model:OE_WorkReportModel) {
+        var parameter:[String:Any] = [String:Any]()
+        parameter["gzall"] = 0
         parameter["tjdate"]  = model.dateStr
         parameter["dt"] = "tj"
         parameter["jjzy0"] = model.jjzy
         parameter["worktime0"] = model.workTime
         parameter["title0"] = model.title
         parameter["workcg0"] = model.workResult
+        parameter["worknum0"] = 1
+        parameter["worktime"] = 480
+        parameter["zscg0"] = model.workResult?.characters.count
+        parameter["zsms0"] = model.title?.characters.count
         Alamofire.request(workReportUrl, method: .post, parameters: parameter)
             .response { (response) in
                 let cfEnc = CFStringEncodings.GB_18030_2000
@@ -87,9 +91,8 @@ class Tool: NSObject {
         
     }
     
-    
-   /// 获取cookie 执行 方法
-   private func toolHaveCookieRequest(requestFunc:@escaping ()->()){
+    /// 获取cookie 执行 方法
+    private func toolHaveCookieRequest(requestFunc:@escaping ()->()){
         let parameter = ["username":username,
                          "password":password]
         Alamofire.request(cookieUrl, method: .post, parameters: parameter)
@@ -98,7 +101,6 @@ class Tool: NSObject {
                 requestFunc()
         }
     }
-    
     
     
     /// 发送打卡
@@ -129,8 +131,8 @@ class Tool: NSObject {
                 
                 //1判断是否为写总结
                 if workType == WorkupTime.WorkupTimeWrite {
-                    if self.checkNeedWrite(content: resultStr) {
-                        handle(true)
+                    if self.checkisWrite(content: resultStr) {
+                        handle(self.checkNeedWrite(content: resultStr))
                     }
                 }else{
                     let result = self.checkWorkTime(content: resultStr, workType: workType)
@@ -147,8 +149,12 @@ class Tool: NSObject {
         print("\(!resultHref)")
         return !resultHref
     }
-    func checkNeedWrite(content:String) ->Bool {
-        let writePattern = "未写总结"
+    func checkNeedWrite(content:String)->Bool {
+        let writePattern = "已写"
+        return !content.isMatched(writePattern)
+    }
+    func checkisWrite(content:String) ->Bool {
+        let writePattern = "总结"
         return content.isMatched(writePattern)
     }
     func checkWorkTime(content:String,workType:WorkupTime) ->Bool {
@@ -167,7 +173,7 @@ class Tool: NSObject {
             patternTime = "&&&&&"
             break;
         }
-
+        
         let isMatch = content.isMatched(patternTime)
         return isMatch
         

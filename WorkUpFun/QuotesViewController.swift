@@ -9,6 +9,7 @@
 import Cocoa
 
 let KWorkState = "worKState"
+let notiWorkAuto = Notification.Name("notiWorkAuto")
 typealias BtnBlock = (_ isShowWrire:Bool) -> Void
 class QuotesViewController: NSViewController {
     var clickLazyNum:Int = 0
@@ -33,20 +34,33 @@ class QuotesViewController: NSViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //        checkWorkState()
         
+        checkWorkState()
+
     }
     
+    override func viewDidDisappear() {
+        UserDefaults.standard.set(haveNeedWorkup, forKey: KWorkState)
+        UserDefaults.standard.synchronize()
+    }
+
     @IBAction func lab_lazyWork(_ sender: NSButton) {
+    
         if clickLazyNum>6 {
             clickLazyNum = 0
         }
         clickLazyNum += 1
         print(clickLazyNum)
         if clickLazyNum == 6 {
-            sender.setAccessibilityTitle("^.^")
-        }else{
-            sender.stringValue = "=.="
+            sender.title = "♺"
+            NotificationCenter.default.post(name: notiWorkAuto, object: nil)
+        }
+        else if clickLazyNum == 4 {
+            UserDefaults.standard.removeObject(forKey: kAutoWorkupState)
+            UserDefaults.standard.synchronize()
+        }
+        else{
+            sender.title = "=.="
         }
         
     }
@@ -60,11 +74,11 @@ class QuotesViewController: NSViewController {
         Tool.shareTool.toolWorkupRequest(timeType: .WorkupTimeNight)
     }
     
+    /// 检测状态
     @IBAction func btn_checkWorkState(_ sender: NSButton) {
         checkWorkState()
+        
     }
-    
-    
     
     @IBAction func btn_writeClick(_ sender: NSButton) {
         self.showWrite = !self.showWrite
@@ -82,6 +96,7 @@ class QuotesViewController: NSViewController {
         
         
         let model = OE_WorkReportModel()
+        //
         model.jjzy = "\(4 - self.Cbox_workType.indexOfSelectedItem)"
         model.workTime = self.Cbox_workTime.objectValueOfSelectedItem as? String
         let date = Date()
@@ -94,70 +109,62 @@ class QuotesViewController: NSViewController {
         
         Tool.shareTool.toolSubmitWorkReport(model: model)
     }
+
+    @IBAction func btn_logoutClick(_ sender: NSButton) {
+        
+    }
     
-
-
+    
     //MARK: 自定义方法
     ///检测打卡状态
     func checkWorkState(){
-
-
+        
         Tool.shareTool.toolChecKWorkState(workType: .WorkupTimeAM) { [weak self] (result) in
-            print("获取上班时间success")
+            print("获取上班时间success \(result)需要打卡")
+            print(Thread.current);
             if (result){
                 self?.box_AM.fillColor = NSColor(calibratedRed: 232/255.0, green: 101/255.0, blue: 83/255.0, alpha: 1)
             }else{
                 self?.box_AM.fillColor = NSColor(calibratedRed: 88/255.0, green: 232/255.0, blue: 109/255.0, alpha: 1)
             }
-
+            self?.haveNeedWorkup = result
         }
-        
-        
         
         Tool.shareTool.toolChecKWorkState(workType: .WorkupTimeNoon) { [weak self] (result) in
             print("获取午班时间success")
             if (result){
                 self?.box_noon.fillColor = NSColor(calibratedRed: 232/255.0, green: 101/255.0, blue: 83/255.0, alpha: 1)
+                
             }else{
                 self?.box_noon.fillColor = NSColor(calibratedRed: 88/255.0, green: 232/255.0, blue: 109/255.0, alpha: 1)
             }
             self?.haveNeedWorkup = result;
             
-            
         }
-        
         
         Tool.shareTool.toolChecKWorkState(workType: .WorkupTimeNight) { [weak self] (result) in
             if (result){
                 print("获取晚班时间success")
                 self?.box_night.fillColor = NSColor(calibratedRed: 232/255.0, green: 101/255.0, blue: 83/255.0, alpha: 1)
+                
             }else{
                 self?.box_night.fillColor = NSColor(calibratedRed: 88/255.0, green: 232/255.0, blue: 109/255.0, alpha: 1)
             }
             self?.haveNeedWorkup = result;
-            
-            
         }
         
         Tool.shareTool.toolChecKWorkState(workType: .WorkupTimeWrite) { [weak self] (result) in
             if (result){
                 print("获取工作总结success")
                 self?.box_write.fillColor = NSColor(calibratedRed: 232/255.0, green: 101/255.0, blue: 83/255.0, alpha: 1)
+                
             }else{
                 self?.box_write.fillColor = NSColor(calibratedRed: 88/255.0, green: 232/255.0, blue: 109/255.0, alpha: 1)
             }
             self?.haveNeedWorkup = result;
-            
         }
-   
     }
     
-    
-    ///保存打卡状态
-    func saveState(){
-        let defaults = UserDefaults.standard
-        defaults.set(haveNeedWorkup, forKey: KWorkState)
-        defaults.synchronize()
-    }
     
 }
+
