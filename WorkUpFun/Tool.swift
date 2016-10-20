@@ -161,10 +161,10 @@ class Tool: NSObject {
         var patternTime:String
         switch (workType) {
         case .WorkupTimeAM:
-            patternTime = "daka_sb"
+            patternTime = "daka_sb\\\""
             break;
         case .WorkupTimeNoon:
-            patternTime = "daka_sb2"
+            patternTime = "daka_sb2\\\""
             break;
         case .WorkupTimeNight:
             patternTime = "st=xb"
@@ -182,7 +182,6 @@ class Tool: NSObject {
 }
 private extension String {
     func isMatched(_ pattern: String) -> Bool {
-        
         let regular = try! NSRegularExpression(pattern: pattern, options:.caseInsensitive)
         let results = regular.matches(in: self, options: .reportProgress , range: NSMakeRange(0, self.characters.count))
         if results.count>0 {

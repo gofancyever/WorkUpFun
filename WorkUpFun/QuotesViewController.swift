@@ -35,7 +35,7 @@ class QuotesViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        checkWorkState()
+//        checkWorkState()
 
     }
     
@@ -76,7 +76,17 @@ class QuotesViewController: NSViewController {
     
     /// 检测状态
     @IBAction func btn_checkWorkState(_ sender: NSButton) {
-        checkWorkState()
+//        checkWorkState()
+        Tool.shareTool.toolChecKWorkState(workType: .WorkupTimeAM) { [weak self] (result) in
+            print("获取上班时间success \(result)需要打卡")
+            print(Thread.current);
+            if (result){
+                self?.box_AM.fillColor = NSColor(calibratedRed: 232/255.0, green: 101/255.0, blue: 83/255.0, alpha: 1)
+            }else{
+                self?.box_AM.fillColor = NSColor(calibratedRed: 88/255.0, green: 232/255.0, blue: 109/255.0, alpha: 1)
+            }
+            self?.haveNeedWorkup = result
+        }
         
     }
     
