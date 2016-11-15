@@ -30,18 +30,41 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         return arc4random_uniform(maxSecond - minSecond) + minSecond
     }
     
+    
+    var quotesViewController:QuotesViewController {
+        let contentVC = QuotesViewController(nibName: "QuotesViewController", bundle: nil)!
+        popover.contentSize = NSSize(width: 126, height: 280)
+        popover.behavior = .transient;
+        contentVC.btnDidClick(btnBlock: { (isShowWrire) in
+            self.popover.contentSize = NSSize(width:(isShowWrire ? 480 : 126), height: 280)
+        })
+        contentVC.btnLogoutDidClick { 
+            self.popover.contentViewController = self.loginController
+        }
+        return contentVC
+    }
+    var loginController:LoginController {
+        let contentVC = LoginController(nibName: "LoginController", bundle: nil)!
+        popover.contentSize = NSSize(width: 245, height: 135)
+        popover.behavior = .transient;
+        contentVC.btnDidClick(btnBlock: { (startlogin) in
+            self.popover.contentViewController = self.quotesViewController
+        })
+        return contentVC;
+    }
+    
     /// 启动
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        
+        //初始化界面
         initSubViews()
-        //接收自动打卡通知
-        NotificationCenter.default.addObserver(self, selector: #selector(AppDelegate.startAutoWorkup), name:notiWorkAuto , object: nil)
-        
-        //读取自动打卡通知
-        let result = UserDefaults.standard.object(forKey: kAutoWorkupState)
-        if (result != nil) {
-            startWorkupFun()
-        }
+//        //接收自动打卡通知
+//        NotificationCenter.default.addObserver(self, selector: #selector(AppDelegate.startAutoWorkup), name:notiWorkAuto , object: nil)
+//        
+//        //读取自动打卡通知
+//        let result = UserDefaults.standard.object(forKey: kAutoWorkupState)
+//        if (result != nil) {
+//            startWorkupFun()
+//        }
         
     }
     
@@ -59,14 +82,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             button.title = "☀︎"
             button.action = #selector(AppDelegate.togglePopover)
         }
+        popover.contentViewController = self.loginController;
+//        popover.contentViewController = UserDefaults.standard.object(forKey: kUsername) != nil ? self.quotesViewController : self.loginController
         
-        let  contentVC = QuotesViewController(nibName: "QuotesViewController", bundle: nil)
-        popover.contentSize = NSSize(width: 126, height: 280)
-        popover.behavior = .transient;
-        contentVC?.btnDidClick(btnBlock: { (isShowWrire) in
-            self.popover.contentSize = NSSize(width:(isShowWrire ? 480 : 126), height: 280)
-        })
-        popover.contentViewController = contentVC
     }
     
     //开启自动打卡通知

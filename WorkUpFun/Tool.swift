@@ -13,9 +13,12 @@ import Alamofire
 let workUrl = "http://192.168.0.111:9696/main.asp"
 let pattern = "<span id=\"daka_.*\">[\\s\\S]*?</span>"
 let cookieUrl = "http://192.168.0.111:9696/?action=login"
-let username = "gaof"
-let password = "nongji36002nd"
+//let username = "gaof"
+//let password = "nongji36002nd"
 let workReportUrl = "http://192.168.0.111:9696/worklog/add_ok.asp"
+
+let kUsername = "Username"
+let kPassword = "Password"
 
 
 enum WorkResult:NSInteger {
@@ -67,6 +70,59 @@ class Tool: NSObject {
         }
     }
     
+    /// 保存用户登录账号密码
+    func toolSaveUserInfo(userName:String,passWord:String) -> Void {
+        UserDefaults.standard.set(userName, forKey: kUsername)
+        UserDefaults.standard.set(passWord, forKey: kPassword)
+        UserDefaults.standard.synchronize()
+    }
+    func toolRemoveUserInfo() {
+        UserDefaults.standard.removeObject(forKey: kUsername);
+        UserDefaults.standard.removeObject(forKey: kPassword);
+        UserDefaults.standard.synchronize();
+    }
+    
+    /// 获取cookie 执行 方法
+    func toolHaveCookieRequest(requestFunc:@escaping ()->()){
+        let userName = UserDefaults.standard.object(forKey: kUsername) as! String
+        let password = UserDefaults.standard.object(forKey: kPassword) as! String
+        let parameter = ["username":userName,
+                         "password":password]
+/*
+        var request = URLRequest(url: URL(string: cookieUrl)!)
+        // 这块就是区别啦，其实也差不多
+        request.httpMethod = "POST"
+        let postString = "username=\(username)&password=\(password)"
+        request.httpBody = postString.data(using: String.Encoding.utf8)
+        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+                
+        }
+        task.resume()
+        
+      */
+        /*
+        Alamofire.request(cookieUrl, method: .post, parameters: parameter)
+            .response { (resp) in
+
+                
+               
+                
+                let cfEnc = CFStringEncodings.GB_18030_2000
+                let enc = CFStringConvertEncodingToNSStringEncoding(CFStringEncoding(cfEnc.rawValue))
+                let content = String(data: resp.data!, encoding: String.Encoding(rawValue: enc))
+                print(content!)
+
+                
+                let headerFields = resp.response?.allHeaderFields as? [String: String]
+                let url = resp.request?.url
+                var cookie:[HTTPCookie] = HTTPCookie.cookies(withResponseHeaderFields: headerFields!, for: url!)
+                cookie.removeAll()
+                
+                
+        }
+ */
+    }
+    
     /// 发送工作总结
     private func submitWorkReport(model:OE_WorkReportModel) {
         var parameter:[String:Any] = [String:Any]()
@@ -91,17 +147,7 @@ class Tool: NSObject {
         
     }
     
-    /// 获取cookie 执行 方法
-    private func toolHaveCookieRequest(requestFunc:@escaping ()->()){
-        let parameter = ["username":username,
-                         "password":password]
-        Alamofire.request(cookieUrl, method: .post, parameters: parameter)
-            .response { (resp) in
-                print("获取到cookie...")
-                requestFunc()
-        }
-    }
-    
+
     
     /// 发送打卡
     private func workupWithTime(timeType:WorkupTime) {

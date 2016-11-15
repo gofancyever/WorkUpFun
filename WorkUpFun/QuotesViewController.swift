@@ -11,9 +11,12 @@ import Cocoa
 let KWorkState = "worKState"
 let notiWorkAuto = Notification.Name("notiWorkAuto")
 typealias BtnBlock = (_ isShowWrire:Bool) -> Void
+typealias BtnLogOutBlock = () -> Void
+
 class QuotesViewController: NSViewController {
     var clickLazyNum:Int = 0
     var block: BtnBlock?
+    var logoutBlock:BtnLogOutBlock?
     var haveNeedWorkup:Bool = false;
     var showWrite: Bool = false
     @IBOutlet weak var tf_content: NSTextField!
@@ -35,7 +38,7 @@ class QuotesViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        checkWorkState()
+        checkWorkState()
 
     }
     
@@ -76,18 +79,7 @@ class QuotesViewController: NSViewController {
     
     /// 检测状态
     @IBAction func btn_checkWorkState(_ sender: NSButton) {
-//        checkWorkState()
-        Tool.shareTool.toolChecKWorkState(workType: .WorkupTimeAM) { [weak self] (result) in
-            print("获取上班时间success \(result)需要打卡")
-            print(Thread.current);
-            if (result){
-                self?.box_AM.fillColor = NSColor(calibratedRed: 232/255.0, green: 101/255.0, blue: 83/255.0, alpha: 1)
-            }else{
-                self?.box_AM.fillColor = NSColor(calibratedRed: 88/255.0, green: 232/255.0, blue: 109/255.0, alpha: 1)
-            }
-            self?.haveNeedWorkup = result
-        }
-        
+        checkWorkState()
     }
     
     @IBAction func btn_writeClick(_ sender: NSButton) {
@@ -121,10 +113,16 @@ class QuotesViewController: NSViewController {
     }
 
     @IBAction func btn_logoutClick(_ sender: NSButton) {
-        
+        Tool.shareTool.toolRemoveUserInfo()
+        if (self.logoutBlock != nil) {
+            self.logoutBlock!()
+        }
     }
-    
-    
+    func btnLogoutDidClick(block:BtnLogOutBlock?){
+        if (block != nil) {
+            self.logoutBlock = block;
+        }
+    }
     //MARK: 自定义方法
     ///检测打卡状态
     func checkWorkState(){
