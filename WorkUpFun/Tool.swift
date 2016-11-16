@@ -16,6 +16,7 @@ let cookieUrl = "http://192.168.0.111:9696/?action=login"
 //let username = "gaof"
 //let password = "nongji36002nd"
 let workReportUrl = "http://192.168.0.111:9696/worklog/add_ok.asp"
+let logoutUrl = "http://192.168.0.111:9696/logout.asp"
 
 let kUsername = "Username"
 let kPassword = "Password"
@@ -88,39 +89,15 @@ class Tool: NSObject {
         let password = UserDefaults.standard.object(forKey: kPassword) as! String
         let parameter = ["username":userName,
                          "password":password]
-/*
-        var request = URLRequest(url: URL(string: cookieUrl)!)
-        // 这块就是区别啦，其实也差不多
-        request.httpMethod = "POST"
-        let postString = "username=\(username)&password=\(password)"
-        request.httpBody = postString.data(using: String.Encoding.utf8)
-        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
-                
-        }
-        task.resume()
-        
-      */
-        /*
         Alamofire.request(cookieUrl, method: .post, parameters: parameter)
             .response { (resp) in
-
-                
-               
-                
-                let cfEnc = CFStringEncodings.GB_18030_2000
-                let enc = CFStringConvertEncodingToNSStringEncoding(CFStringEncoding(cfEnc.rawValue))
-                let content = String(data: resp.data!, encoding: String.Encoding(rawValue: enc))
-                print(content!)
-
-                
-                let headerFields = resp.response?.allHeaderFields as? [String: String]
-                let url = resp.request?.url
-                var cookie:[HTTPCookie] = HTTPCookie.cookies(withResponseHeaderFields: headerFields!, for: url!)
-                cookie.removeAll()
-                
-                
+//                let cfEnc = CFStringEncodings.GB_18030_2000
+//                let enc = CFStringConvertEncodingToNSStringEncoding(CFStringEncoding(cfEnc.rawValue))
+//                let content = String(data: resp.data!, encoding: String.Encoding(rawValue: enc))
+//                print(content!)
+                requestFunc()
         }
- */
+ 
     }
     
     /// 发送工作总结
@@ -146,7 +123,16 @@ class Tool: NSObject {
         }
         
     }
-    
+    func toolLogoutRequest() {
+        
+        Alamofire.request(logoutUrl, method: .post, parameters: nil)
+            .response { (resp) in
+                let cfEnc = CFStringEncodings.GB_18030_2000
+                let enc = CFStringConvertEncodingToNSStringEncoding(CFStringEncoding(cfEnc.rawValue))
+                let content = String(data: resp.data!, encoding: String.Encoding(rawValue: enc))
+                print(content!)
+        }
+    }
 
     
     /// 发送打卡

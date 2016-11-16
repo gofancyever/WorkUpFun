@@ -20,8 +20,7 @@ class ViewController: NSViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
+
     }
     
     @IBAction func btn_submitClick(_ sender: AnyObject) {

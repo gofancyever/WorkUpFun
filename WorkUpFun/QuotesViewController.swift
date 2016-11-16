@@ -65,7 +65,6 @@ class QuotesViewController: NSViewController {
         else{
             sender.title = "=.="
         }
-        
     }
     @IBAction func btn_AM(_ sender: NSButton) {
         Tool.shareTool.toolWorkupRequest(timeType: .WorkupTimeAM)
@@ -96,9 +95,7 @@ class QuotesViewController: NSViewController {
     }
     @IBAction func submitClick(_ sender: AnyObject) {
         
-        
         let model = OE_WorkReportModel()
-        //
         model.jjzy = "\(4 - self.Cbox_workType.indexOfSelectedItem)"
         model.workTime = self.Cbox_workTime.objectValueOfSelectedItem as? String
         let date = Date()
@@ -114,10 +111,12 @@ class QuotesViewController: NSViewController {
 
     @IBAction func btn_logoutClick(_ sender: NSButton) {
         Tool.shareTool.toolRemoveUserInfo()
+        Tool.shareTool.toolLogoutRequest()//清除cookie
         if (self.logoutBlock != nil) {
             self.logoutBlock!()
         }
     }
+    
     func btnLogoutDidClick(block:BtnLogOutBlock?){
         if (block != nil) {
             self.logoutBlock = block;

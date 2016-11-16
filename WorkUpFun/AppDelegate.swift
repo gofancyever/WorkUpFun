@@ -82,8 +82,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             button.title = "☀︎"
             button.action = #selector(AppDelegate.togglePopover)
         }
-        popover.contentViewController = self.loginController;
-//        popover.contentViewController = UserDefaults.standard.object(forKey: kUsername) != nil ? self.quotesViewController : self.loginController
+        
+//        popover.contentViewController = self.loginController;
+        popover.contentViewController = UserDefaults.standard.object(forKey: kUsername) != nil ? self.quotesViewController : self.loginController
         
     }
     
