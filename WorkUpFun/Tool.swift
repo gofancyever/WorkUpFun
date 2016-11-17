@@ -111,7 +111,7 @@ class Tool: NSObject {
         parameter["title0"] = model.title
         parameter["workcg0"] = model.workResult
         parameter["worknum0"] = 1
-        parameter["worktime"] = 480
+        parameter["worktime"] = model.workTime
         parameter["zscg0"] = model.workResult?.characters.count
         parameter["zsms0"] = model.title?.characters.count
         Alamofire.request(workReportUrl, method: .post, parameters: parameter)
@@ -140,6 +140,10 @@ class Tool: NSObject {
         let url = timeType.rawValue;
         print(url)
         Alamofire.request(url).response { (response) in
+            let cfEnc = CFStringEncodings.GB_18030_2000
+            let enc = CFStringConvertEncodingToNSStringEncoding(CFStringEncoding(cfEnc.rawValue))
+            let content = String(data: response.data!, encoding: String.Encoding(rawValue: enc))
+//            print(content)
             print("执行打卡完毕")
         }
     }

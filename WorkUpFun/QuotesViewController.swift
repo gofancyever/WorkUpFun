@@ -59,6 +59,7 @@ class QuotesViewController: NSViewController {
             NotificationCenter.default.post(name: notiWorkAuto, object: nil)
         }
         else if clickLazyNum == 4 {
+            sender.title = "@.@"
             UserDefaults.standard.removeObject(forKey: kAutoWorkupState)
             UserDefaults.standard.synchronize()
         }
@@ -94,7 +95,7 @@ class QuotesViewController: NSViewController {
         }
     }
     @IBAction func submitClick(_ sender: AnyObject) {
-        
+        print("das");
         let model = OE_WorkReportModel()
         model.jjzy = "\(4 - self.Cbox_workType.indexOfSelectedItem)"
         model.workTime = self.Cbox_workTime.objectValueOfSelectedItem as? String

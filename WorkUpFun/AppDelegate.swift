@@ -57,15 +57,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         //初始化界面
         initSubViews()
-//        //接收自动打卡通知
-//        NotificationCenter.default.addObserver(self, selector: #selector(AppDelegate.startAutoWorkup), name:notiWorkAuto , object: nil)
-//        
-//        //读取自动打卡通知
-//        let result = UserDefaults.standard.object(forKey: kAutoWorkupState)
-//        if (result != nil) {
-//            startWorkupFun()
-//        }
+        //接收自动打卡通知
+        NotificationCenter.default.addObserver(self, selector: #selector(AppDelegate.startAutoWorkup), name:notiWorkAuto , object: nil)
         
+        //读取自动打卡通知
+        let result = UserDefaults.standard.object(forKey: kAutoWorkupState)
+        if (result != nil) {
+            startWorkupFun()
+        }
+    
     }
     
     /// 退出
@@ -99,6 +99,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func startWorkupFun() {
         let workTime2 = "13:\(minute):\(second)"
         let workTime3 = "18:\(minute):\(second)"
+        
         print("打卡时间：\(workTime2)====\(workTime3)")
         Tool.shareTool.toolWorkupRequest(timeType: .WorkupTimeAM)//上班
         startTimeStr(startTimeStr: workTime2,timeType: .WorkupTimeNoon)//午班
@@ -122,7 +123,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             Tool.shareTool.toolWorkupRequest(timeType: timeType)
         }
     }
-    
     func showPopover(sender:AnyObject?){
         if let button = statusItem.button {
             popover.show(relativeTo: button.bounds, of: button, preferredEdge: NSRectEdge.minY)
